@@ -186,10 +186,10 @@ export async function handlePaymentSubmission(userId, paymentMethod, orderAddres
         // Auto-send invoice email removed per configuration - invoices are available in orders page.
         // Notify user of success
         try {
-            if (window.showToast) window.showToast('🎉 Payment successful! Your invoice is available in the orders page.', 'success'); else alert('Payment successful! Your invoice is available in the orders page.');
+            window.showToast && window.showToast('🎉 Payment successful! Your invoice is available in the orders page.', 'success');
         } catch (notifyErr) {
             // If toast helper fails, fall back to alert
-            try { alert('Payment successful! Your invoice is available in the orders page.'); } catch (e) { console.log('Payment successful!'); }
+            // Success message now shown as toast above; no alert fallback needed.
         }
         
         // Optionally redirect to confirmation page

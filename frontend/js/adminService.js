@@ -4,6 +4,7 @@ const API_BASE_URL = 'http://localhost:8081/api/admins';
 class AdminService {
     // Update book by ID
     static async updateBookById(bookId, updatedBookDto) {
+        if (!bookId) throw new Error('Book ID is missing. Cannot update book.');
         const token = localStorage.getItem('booklifyToken');
         const response = await fetch(`${API_BASE_URL}/editBook/${bookId}`, {
             method: 'PUT',

@@ -226,29 +226,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle user deletion
     window.deleteUser = async function(userId) {
-        if (!confirm('Are you sure you want to delete this user?')) {
-            return;
-        }
-        try {
-            await AdminService.deleteUser(userId);
-            showToast('success', 'User deleted successfully');
-            loadUsers();
-        } catch (error) {
-            showToast('error', 'Failed to delete user');
+        if (typeof showConfirmModal === 'function') {
+            showConfirmModal('Are you sure you want to delete this user?', async () => {
+                try {
+                    await AdminService.deleteUser(userId);
+                    showToast('success', 'User deleted successfully');
+                    loadUsers();
+                } catch (error) {
+                    showToast('error', 'Failed to delete user');
+                }
+            }, 'Delete User');
+        } else {
+            if (!confirm('Are you sure you want to delete this user?')) return;
+            try {
+                await AdminService.deleteUser(userId);
+                showToast('success', 'User deleted successfully');
+                loadUsers();
+            } catch (error) {
+                showToast('error', 'Failed to delete user');
+            }
         }
     };
 
     // Handle book deletion
     window.deleteBook = async function(bookId) {
-        if (!confirm('Are you sure you want to delete this book?')) {
-            return;
-        }
-        try {
-            await AdminService.deleteBookById(bookId);
-            showToast('success', 'Book deleted successfully');
-            loadBooks();
-        } catch (error) {
-            showToast('error', 'Failed to delete book');
+        if (typeof showConfirmModal === 'function') {
+            showConfirmModal('Are you sure you want to delete this book?', async () => {
+                try {
+                    await AdminService.deleteBookById(bookId);
+                    showToast('success', 'Book deleted successfully');
+                    loadBooks();
+                } catch (error) {
+                    showToast('error', 'Failed to delete book');
+                }
+            }, 'Delete Book');
+        } else {
+            if (!confirm('Are you sure you want to delete this book?')) return;
+            try {
+                await AdminService.deleteBookById(bookId);
+                showToast('success', 'Book deleted successfully');
+                loadBooks();
+            } catch (error) {
+                showToast('error', 'Failed to delete book');
+            }
         }
     };
 

@@ -17,11 +17,19 @@ class InvoiceService {
         const invoiceNumber = `INV-${order.orderId}-${Date.now()}`;
         const currentDate = new Date();
         
-        // Calculate totals
-        const subtotal = orderItems.reduce((sum, item) => sum + (item.price || 0), 0);
-        const taxRate = 0.15; // 15% VAT (adjust as needed)
-        const taxAmount = subtotal * taxRate;
-        const totalAmount = subtotal + taxAmount;
+    // Calculate totals
+    // Prices stored in orderItems are VAT-INCLUSIVE. We need to extract the VAT portion
+    // so the invoice shows a subtotal (net) and the VAT amount separately while keeping
+    // the displayed unit prices inclusive.
+    const taxRate = 0.15; // 15% VAT (adjust as needed)
+    // Sum the line totals (unit price * qty) as the gross total (VAT included)
+    const grossTotal = orderItems.reduce((sum, item) => sum + ((item.price || 0) * (item.quantity || 1)), 0);
+    // Extract VAT portion from gross total: VAT = grossTotal * (taxRate / (1 + taxRate))
+    const taxAmount = grossTotal * (taxRate / (1 + taxRate));
+    // Subtotal (net) is gross minus the VAT portion
+    const subtotal = grossTotal - taxAmount;
+    // Total amount payable remains the gross total (what customer actually paid)
+    const totalAmount = grossTotal;
         
         // Format address from address object or fallback to order delivery address
         let customerAddress = 'No address provided';
@@ -164,9 +172,11 @@ class InvoiceService {
                 total: (item.quantity || 1) * (item.price || 0)
             })),
             totals: {
+                // Subtotal is the VAT-excluded net amount
                 subtotal: subtotal,
                 taxRate: taxRate,
                 taxAmount: taxAmount,
+                // totalAmount is the gross amount (VAT included) — matches what customer paid
                 totalAmount: totalAmount,
                 currency: 'R'
             },
@@ -501,7 +511,15 @@ class InvoiceService {
                     </tr>
                 </thead>
                 <tbody>
-                    ${invoiceData.items.map(item => `
+                    ${invoiceData.items.map(item => {
+                        // Compute net (VAT-excluded) unit price and line total for display
+                        const taxRate = invoiceData.totals.taxRate || 0;
+                        const grossUnit = Number(item.unitPrice || 0);
+                        const qty = Number(item.quantity || 1);
+                        const netUnit = grossUnit / (1 + taxRate);
+                        const netLineTotal = netUnit * qty;
+
+                        return `
                         <tr>
                             <td>
                                 <div class="book-title">${item.description}</div>
@@ -511,11 +529,11 @@ class InvoiceService {
                             <td>
                                 <span class="condition-badge condition-${item.condition.toLowerCase()}">${item.condition}</span>
                             </td>
-                            <td>${item.quantity}</td>
-                            <td>${invoiceData.totals.currency}${item.unitPrice.toFixed(2)}</td>
-                            <td>${invoiceData.totals.currency}${item.total.toFixed(2)}</td>
+                            <td>${qty}</td>
+                            <td>${invoiceData.totals.currency}${netUnit.toFixed(2)}</td>
+                            <td>${invoiceData.totals.currency}${netLineTotal.toFixed(2)}</td>
                         </tr>
-                    `).join('')}
+                    `}).join('')}
                 </tbody>
             </table>
             

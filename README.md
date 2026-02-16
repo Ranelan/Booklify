@@ -245,8 +245,6 @@ This project is part of a Group Assignment for 2025. All rights reserved.
 - Bootstrap team for the excellent UI framework
 - All contributors and testers who helped improve Booklify
 
-## 🗺️ Roadmap
-
 ### Upcoming Features
 - [ ] Advanced search with AI-powered recommendations
 - [ ] Integration with major book publishers
@@ -256,5 +254,3 @@ This project is part of a Group Assignment for 2025. All rights reserved.
 ---
 
 **Made with ❤️ for students by students**
-
-*Empowering education through affordable textbooks*

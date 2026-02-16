@@ -249,12 +249,9 @@ This project is part of a Group Assignment for 2025. All rights reserved.
 ## 🗺️ Roadmap
 
 ### Upcoming Features
-- [ ] Mobile app (iOS & Android)
 - [ ] Advanced search with AI-powered recommendations
 - [ ] Integration with major book publishers
-- [ ] Real-time chat between buyers and sellers
 - [ ] Multiple payment gateway options
-- [ ] International shipping support
 - [ ] Book condition verification with image recognition
 
 ---

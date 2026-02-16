@@ -244,7 +244,6 @@ This project is part of a Group Assignment for 2025. All rights reserved.
 
 - Bootstrap team for the excellent UI framework
 - All contributors and testers who helped improve Booklify
-- The student community for feedback and support
 
 ## 🗺️ Roadmap
 

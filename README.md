@@ -238,6 +238,7 @@ This project is part of a Group Assignment for 2025. All rights reserved.
 - **Email**: [support@booklify.com](mailto:support@booklify.com)
 - **Phone**: 021 321 5432
 - **Support Hours**: 24/7 Available
+- **Issues**: For bug reports and feature requests, please use [GitHub Issues](https://github.com/Ranelan/Booklify/issues)
 
 ## 🙏 Acknowledgments
 

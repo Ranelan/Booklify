@@ -233,9 +233,8 @@ We welcome contributions to Booklify! To contribute:
 
 This project is part of a Group Assignment for 2025. All rights reserved.
 
-## 📞 Contact & Support
+## 📞 Support
 
-- **Email**: [support@booklify.com](mailto:support@booklify.com)
 - **Issues**: For bug reports and feature requests, please use [GitHub Issues](https://github.com/Ranelan/Booklify/issues)
 
 ## 🙏 Acknowledgments
